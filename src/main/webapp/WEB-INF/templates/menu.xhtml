@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+
+    </h:head>
+    <h:body>
+        <style>
+            .fa { 
+                color: #383838;
+            }
+        </style>
+            <p:growl id="grlMensajes" showDetail="true"/>
+            <p:menubar>
+                <p:menuitem value="Inicio" outcome="principal.xhtml"/>
+                <p:submenu label="Administrar">
+                    <p:menuitem value="Gestionar funcionarios" outcome="gestionarFuncionarios.xtml"/>
+                    <p:menuitem value="Administrar cargos" outcome="administrarCargos.xhtml"/>
+                </p:submenu>
+                <p:submenu label="Autos">
+                    <p:menuitem value="Gestionar autos" outcome="gestionarAutos.xhtml"/>
+                </p:submenu>
+                <p:submenu label="Tickets">
+                    <p:menuitem value="Aprobacion de tickets" outcome="aprobacionTickets.xhtml"/>
+                </p:submenu>
+                <p:submenu label="Reportes">
+                    <p:menuitem value="Reporte de renta de autos" outcome="reporteRentaDeAutos.xhtml"/>
+                </p:submenu>
+                <p:submenu label="Contactos">
+                    <p:menuitem value="Contactos" outcome="contactos.xhtml"/>
+                </p:submenu>
+                <p:submenu label="#{controladorSesion.empleadoActual.nombreEmpleado}">
+                    <p:menuitem value="Cerrar Sesión" action="#{controladorSesion.cerrarSesion()}"/>
+                </p:submenu>
+            </p:menubar>
+    </h:body>
+</html>

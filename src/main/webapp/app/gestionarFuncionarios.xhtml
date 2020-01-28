@@ -1,0 +1,111 @@
+<ui:composition 
+    template="/WEB-INF/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="content">
+        <h:head>
+            <title>Funcionarios</title>
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/estilos.css"/>            
+        </h:head>
+        <h:body>
+            <h:form id="frmFuncionarios">
+                <p:growl id="grlMensajes"/>
+                <h1>Funcionarios Habilitados</h1>
+                <p:dataTable value="#{controladorGestionarFuncionarios.listaEmpleados}" var="empleados" emptyMessage="No hay funcionarios aún." rowKey="#{empleados.idEmpleado}" id="tblFuncionarios">
+                    <p:column style="width: 25px; text-align: center;">
+                        <p:commandLink styleClass="ui-icon ui-icon-pencil" actionListener="#{controladorGestionarFuncionarios.editarFuncionario(empleados)}" onclick="PF('dlgFuncionarios').show();" update=":frmDlgFuncionarios"/>
+                    </p:column>
+                    <p:column style="width: 25px; text-align: center;">
+                        <p:commandLink styleClass="ui-icon ui-icon-close" actionListener="#{controladorGestionarFuncionarios.eliminarFuncionario(empleados)}" update=":frmFuncionarios:tblFuncionarios :frmFuncionariosDeshabilitados:tblFuncionariosDeshabilitados">
+                            <p:confirm header="Confirmación" message="Esto desactivara al funcionario. ¿Está seguro?" icon="ui-icon-alert" />
+                        </p:commandLink>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{empleados.nombreEmpleado}"/>
+                    </p:column>
+                    <p:column headerText="Cargo">
+                        <h:outputText value="#{empleados.empleadocargo.descripcion}"/>
+                    </p:column>
+                    <p:column headerText="Email">
+                        <h:outputText value="#{empleados.correoElectronicoEmpleado}"/>
+                    </p:column>                        
+                    <f:facet name="footer">
+                        <p:commandButton icon="ui-icon-plus" value="Nuevo empleado" actionListener="#{controladorGestionarFuncionarios.nuevoEmpleado()}" onclick="PF('dlgFuncionarios').show();" update=":frmDlgFuncionarios"/>
+                    </f:facet>
+                </p:dataTable>
+            </h:form>
+
+            <h:form id="frmFuncionariosDeshabilitados">
+                <p:growl id="grlMensajes" sticky="false" showDetail="true"/>
+                <h1>Funcionarios Deshabilitados</h1>
+                <p:dataTable id="tblFuncionariosDeshabilitados" value="#{controladorGestionarFuncionarios.listaEmpleadosDeshabilitados}" var="empleadoDesactivado" emptyMessage="No se han deshabilitado usuarios">
+                    <p:column style="width: 25px; text-align: center;">
+                        <p:commandLink styleClass="ui-icon ui-icon-pencil" actionListener="#{controladorGestionarFuncionarios.editarFuncionario(empleadoDesactivado)}" onclick="PF('dlgFuncionarios').show();" update=":frmDlgFuncionarios"/>
+                    </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{empleadoDesactivado.nombreEmpleado}"/>
+                    </p:column>
+                    <p:column headerText="Cargo">
+                        <h:outputText value="#{empleadoDesactivado.empleadocargo.descripcion}"/>
+                    </p:column>
+                    <p:column headerText="Email">
+                        <h:outputText value="#{empleadoDesactivado.correoElectronicoEmpleado}"/>
+                    </p:column>  
+                    <p:column style="width: 150px; text-align: center;">
+                        <p:commandButton icon="ui-icon ui-icon-check" value="Activar" actionListener="#{controladorGestionarFuncionarios.activarFuncionario(empleadoDesactivado)}" update=":frmFuncionarios:tblFuncionarios :frmFuncionariosDeshabilitados:tblFuncionariosDeshabilitados">
+                            <p:confirm header="Confirmación" message="Esto activará al funcionario. ¿Está seguro?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+            <p:dialog id="dlgFuncionarios" widgetVar="dlgFuncionarios" header="Funcionario" >
+                <h:form id="frmDlgFuncionarios">
+                    <p:growl id="grlMensajes"/>
+                    <h:panelGrid columns="4" style="margin-bottom: 10px;" cellspacing="15">
+                        <h:outputLabel value="Identificación" rendered="#{controladorGestionarFuncionarios.esNuevoEmpleado}"/>
+                        <p:inputNumber value="#{controladorGestionarFuncionarios.empleadoSeleccionado.idEmpleado}" required="true" requiredMessage="Debe espeficar la identificacion del usuario" rendered="#{controladorGestionarFuncionarios.esNuevoEmpleado}" thousandSeparator="" decimalSeparator="" decimalPlaces="0" maxlength="10"/>
+                        <h:outputLabel value="Nombre"/>
+                        <p:inputText value="#{controladorGestionarFuncionarios.empleadoSeleccionado.nombreEmpleado}" required="true" requiredMessage="Debe imgresar el nombre del funcionario"/>
+                        <h:outputLabel value="Dirección" rendered="#{controladorGestionarFuncionarios.esNuevoEmpleado}"/>
+                        <p:inputText value="#{controladorGestionarFuncionarios.empleadoSeleccionado.direccionEmpleado}" rendered="#{controladorGestionarFuncionarios.esNuevoEmpleado}" required="true" requiredMessage="Debe ingresar la dirección del funcionario."/>
+                        <h:outputLabel value="Contraseña" rendered="#{controladorGestionarFuncionarios.esNuevoEmpleado}"/>
+                        <p:password value="#{controladorGestionarFuncionarios.empleadoSeleccionado.contrasenaEmpleado}" required="true" requiredMessage="Debe especificar la contraseña" rendered="#{controladorGestionarFuncionarios.esNuevoEmpleado}"/>
+                        <h:outputLabel value="Cargo" for="cargo"/>
+                        <p:selectOneMenu value="#{controladorGestionarFuncionarios.codigoCargoSeleccionado}" id="cargo" required="true" requiredMessage="Debe seleccionar un cargo">
+                            <f:selectItem noSelectionOption="true" itemLabel="-- Seleccione --"/>
+                            <f:selectItems value="#{controladorGestionarFuncionarios.cargos}" var="c" itemLabel="#{c.descripcion}" itemValue="#{c.codigoCargo}"/>
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Email"/>
+                        <p:inputText value="#{controladorGestionarFuncionarios.empleadoSeleccionado.correoElectronicoEmpleado}"/>
+                        <f:facet name="footer">
+                            <p:commandButton value="Grabar" actionListener="#{controladorGestionarFuncionarios.grabarUsuario()}" update=":frmFuncionarios :frmFuncionariosDeshabilitados"/>
+                            <p:commandButton value="Cancelar" onclick="PF('dlgFuncionarios').hide();"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </h:form>
+            </p:dialog>
+        </h:body>
+        <script type="text/javascript">
+            function start() {
+                PF('statusDialog').show();
+            }
+
+            function stop() {
+                PF('statusDialog').hide();
+            }
+        </script>
+    </ui:define>
+</ui:composition>

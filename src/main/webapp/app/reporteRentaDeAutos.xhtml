@@ -1,0 +1,73 @@
+<ui:composition 
+    template="/WEB-INF/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="content">
+        <head>
+            <title>Reporte autos rentados</title>
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/estilos.css"/>            
+        </head>
+        <body>
+            <h1>Reporte autos rentados</h1>
+            <h:form id="frmReporte">
+                <h:panelGrid columns="8" cellspacing="15">
+                    <h:outputLabel value="Desde"/>
+                    <p:calendar value="#{controladorReporteRentaAutos.fechaDesde}"/>
+                    <h:outputLabel value="Hasta"/>
+                    <p:calendar value="#{controladorReporteRentaAutos.fechaHasta}"/>
+                    <h:outputLabel value="Estado de ticket"/>
+                    <p:selectOneMenu value="#{controladorReporteRentaAutos.estadoSeleccionado}">
+                        <f:selectItem noSelectionOption="true" itemLabel="-- Seleccione --" itemValue="#{null}"/>
+                        <f:selectItems value="#{controladorReporteRentaAutos.listaEstadosTicket}" var="estado" itemLabel="#{estado}" itemValue="#{estado}"/>
+                    </p:selectOneMenu>
+                    <h:outputLabel value="Empleado "/>
+                    <p:selectOneMenu value="#{controladorReporteRentaAutos.codigoEmpleadoSeleccionado}">
+                        <f:selectItem noSelectionOption="true" itemLabel="-- Seleccione --" itemValue="#{null}"/>
+                        <f:selectItems value="#{controladorReporteRentaAutos.listaEmpleados}" var="empleado" itemLabel="#{empleado.nombreEmpleado}" itemValue="#{empleado.idEmpleado}"/>
+                    </p:selectOneMenu>
+                    <h:outputLabel value="Cliente "/>
+                    <p:selectCheckboxMenu id="clientes" value="#{controladorReporteRentaAutos.clientes}" label="clientes" multiple="true"
+                                          filter="true" filterMatchMode="contains" panelStyle="width: 250px">
+                        <f:selectItem noSelectionOption="true" itemLabel="-- Seleccione --"/>
+                        <f:selectItems value="#{controladorReporteRentaAutos.listaClientes}" var="cliente" itemLabel="#{cliente.nombreCliente}" itemValue="#{cliente.cedula}"/>
+                    </p:selectCheckboxMenu>
+                </h:panelGrid>
+                <p:spacer width="100%" height="15"/>
+                <p:commandButton value="Consultar" actionListener="#{controladorReporteRentaAutos.consultarReporte()}" update="@form"/>
+                <p:spacer width="100%" height="15"/>
+                <p:dataTable id="tblReporte" value="#{controladorReporteRentaAutos.listaTickets}" var="ticket" scrollable="true" scrollHeight="500" scrollWidth="100%" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}" paginator="true" rows="50" paginatorPosition="bottom" widgetVar="tblReporte" filteredValue="#{controladorReporteRentaAutos.listaTicketsFiltradoos}" >
+                    <f:facet name="{Exporters}">
+                        <h:commandLink>
+                            <p:graphicImage name="imagenes/excel.png" width="24"/>
+                            <p:dataExporter type="xls" target="tblReporte" fileName="Reporte_autos_rentados" />
+                        </h:commandLink>
+                    </f:facet>
+
+                    <p:column headerText="Cliente" style="text-align: center">
+                        <p:commandLink actionListener="#{controladorSesion.abrirDialogoCliente(ticket.cliente)}">
+                            <h:outputText value="#{ticket.cliente.nombreCliente}"/>
+                        </p:commandLink>
+                    </p:column>
+                    <p:column headerText="Placa de vehiculo" style="text-align: center">
+                        <h:outputText value="#{ticket.vehiculoPlaca.numeroPlaca}"/>
+                    </p:column>
+                    <p:column headerText="Empleado encargado" style="text-align: center">
+                        <h:outputText value="#{ticket.empleado.nombreEmpleado}"/>
+                    </p:column>
+                    <p:column headerText="Total pagado" style="text-align: center">
+                        <h:outputText value="#{ticket.pagoAlquiler}"/>
+                        <f:facet name="footer">
+                            <h:outputText value="#{controladorReporteRentaAutos.obtenerTotal(ticket.pagoAlquiler)}">
+                                <f:convertNumber maxFractionDigits="2" minFractionDigits="2" minIntegerDigits="1"/>
+                            </h:outputText>
+                        </f:facet>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </body>
+    </ui:define>
+</ui:composition>

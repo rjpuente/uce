@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans" />
+    <h:head>
+        <title>RENT A CAR</title>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/estilos.css"/>
+        <style>
+            #panelSuperior {z-index:2 !important; }
+            #panelSuperior div{overflow:visible;}
+        </style>
+    </h:head>
+    <h:body>
+
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="0" style="border: none; margin: 0px 0px 0px 0px;  padding: 0px 0px 0px 0px;" collapsible="true" gutter="0">
+                <h:form>
+                    <p:graphicImage value="/resources/imagenes/logo1.png" id="img_logo" width="175px" style="padding-left: 80px; padding-top: 20px;" />
+                </h:form>
+            </p:layoutUnit>
+            <p:layoutUnit position="center" style="border: none;">
+                <ui:insert name="contentExterno"></ui:insert>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>

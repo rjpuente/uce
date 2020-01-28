@@ -1,0 +1,60 @@
+<ui:composition 
+    template="/WEB-INF/templates/layout_externo.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="contentExterno">
+        <h:head>
+            <title>Rent A Car</title>
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/estilos.css"/>
+        </h:head>
+        <h:body>
+            <div style="padding-bottom: 10px;">
+                <h:form id="frmRegistro">
+                    <p:growl id="grlRegistro" sticky="false" />
+                    <p:wizard flowListener="#{controladorRegistro.onFlowProcess}" nextLabel="Siguiente" backLabel="Anterior">
+                        <p:tab id="bienvenido" title="Bienvenido">
+                            <p:panel header="Bienvenido">
+                                <p:messages/>
+                                <p>Para usar nuestro sistema, debes estar registrado como cliente.</p>
+                                <p>Registrarse en nuestro sistema es muy sencillo, solo debes seguir los siguientes pasos:</p>
+                                <ul>
+                                    <li>Ingresar tus datos</li>
+                                    <li>Establecer una contraseña para tu cuenta</li>
+                                </ul>                            
+                                <p>Haz click en siguiente para iniciar el proceso de registro.</p>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab id="datosCliente" title="Datos del Cliente">
+                            <p:panel header="Datos generales">
+                                <p:messages/>
+                                <h:panelGrid columnClasses="label, value" columns="4">
+                                    <h:outputText value="RUC/CI *"/>
+                                    <p:inputNumber value="#{controladorRegistro.ruc}" required="true" label="RUC" requiredMessage="Debe ingresar un número de RUC" thousandSeparator="" decimalSeparator="" decimalPlaces="0" maxlength="10"/>
+                                    <h:outputText value="Nombres *"/>
+                                    <p:inputText value="#{controladorRegistro.nombre}" required="true" label="Nombrse" requiredMessage="Debe ingresar el nombre de usuario"/>
+                                    <h:outputText value="Apellidos *"/>
+                                    <p:inputText value="#{controladorRegistro.apellidos}" required="true" label="Apellidos" requiredMessage="Debe ingresar el apellido de usuario"/>
+                                    <h:outputText value="Dirección *"/>
+                                    <p:inputText value="#{controladorRegistro.direccion}" required="true" label="Dirección" requiredMessage="Debe ingresar una dirección"/>
+                                    <h:outputText value="Email *"/>
+                                    <p:inputText value="#{controladorRegistro.email}" required="true" label="Dirección" requiredMessage="Debe ingresar una email"/>
+                                    <h:outputText value="Contraseña *"/>
+                                    <p:password value="#{controladorRegistro.contrasena}" required="true" label="Dirección" requiredMessage="Debe ingresar una contraseña"/>
+                                    <h:outputText value="Confirmar contraseña *"/>
+                                    <p:password value="#{controladorRegistro.confirmarContrasena}" required="true" label="Dirección" requiredMessage="Debe confirmar la contraseña"/>
+                                </h:panelGrid>                                
+                            </p:panel>
+                            <p:spacer width="100%" height="10"/>
+                            <p:commandButton value="Finalizar" style="float: right;" action="#{controladorRegistro.nuevoUsuario()}" update="@form"/>
+                        </p:tab>
+                    </p:wizard>
+                </h:form>
+            </div>
+        </h:body>
+    </ui:define>
+</ui:composition>

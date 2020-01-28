@@ -1,0 +1,131 @@
+<ui:composition 
+    template="/WEB-INF/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="content">        
+        <h:head>
+            <title>Autos</title>
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/estilos.css"/>            
+        </h:head>
+        <h:body >
+            <h1>Gestion de autos</h1>
+            <h:form id="frmAutos">
+                <p:growl id="grlAutos"/>
+                <p:dataTable id="tblAutos" value="#{controladorGestionAutos.listaVehiculos}" var="auto" emptyMessage="No hay autos registrados aún">
+                    <p:column style="width: 25px; text-align: center;">
+                        <p:commandLink styleClass="ui-icon ui-icon-pencil" actionListener="#{controladorGestionAutos.editarAuto(auto)}" onclick="PF('dlgNuevoAuto').show();" update=":frmNuevoAuto"/>
+                    </p:column>
+                    <p:column style="width: 25px; text-align: center;">
+                        <p:commandLink styleClass="ui-icon ui-icon-close" actionListener="#{controladorGestionAutos.eliminarAuto(auto)}" update=":frmAutos:tblAutos">
+                            <p:confirm header="Confirmación" message="Esto eliminara el auto. ¿Está seguro?" icon="ui-icon-alert" />
+                        </p:commandLink>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </p:column>
+                    <p:column headerText="Imagenes">
+                        <h:panelGrid columns="3" cellspacing="5">
+                            <p:graphicImage name="#{auto.imagenVehiculo}" alt="No hay imagen." cache="false" width="150px" stream="true"/>
+                        </h:panelGrid>
+                    </p:column>
+                    <p:column headerText="Placa" style="text-align: center">
+                        <h:outputText value="#{auto.numeroPlaca}"/>
+                    </p:column>
+                    <p:column headerText="Precio actual" style="text-align: center">
+                        <h:outputText value="#{auto.precioActual}">
+                            <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Marca" style="text-align: center">
+                        <h:outputText value="#{auto.marcas.descripcion}" />
+                    </p:column>
+                    <p:column headerText="Tipo de combustible" style="text-align: center">
+                        <h:outputText value="#{auto.tiposCombustible.descripcion}"/>
+                    </p:column>
+                    <p:column headerText="Tipo de vehiculo" style="text-align: center">
+                        <h:outputText value="#{auto.tiposVehiculos.descripcion}"/>
+                    </p:column>
+                    <p:column headerText="Color" style="text-align: center">
+                        <h:outputText value="#{auto.color.descripcion}"/>
+                    </p:column>
+                    <p:column headerText="Disponible" style="text-align: center">
+                        <h:outputText value="#{controladorGestionAutos.traducirEstadoAuto(auto.estadoVehiculo)}"/>
+                    </p:column>
+                    <p:column headerText="Cantidad disponible" style="text-align: center">
+                        <h:outputText value="#{auto.cantidad}"/>
+                    </p:column>
+                    <f:facet name="footer">
+                        <p:commandButton icon="ui-icon ui-icon-plus" value="Nuevo auto" actionListener="#{controladorGestionAutos.nuevoAuto()}" onclick="PF('dlgNuevoAuto').show();" update=":frmNuevoAuto"/>
+                    </f:facet>
+                </p:dataTable>
+            </h:form>
+
+            <p:dialog id="dlgNuevoAuto" header="Auto" widgetVar="dlgNuevoAuto">
+                <h:form id="frmNuevoAuto" enctype="multipart/form-data">
+
+                    <h:panelGrid columns="4" cellspacing="20">
+                        <p:growl id="grlAutos" sticky="false" showDetail="true"/>
+                        <h:panelGroup>
+                            <p:fileUpload uploadLabel="Subir" cancelLabel="Cancelar" skinSimple="true" fileUploadListener="#{controladorGestionAutos.subirImagen}" mode="advanced" update="@form imagen imagen2 imagen3" label="Examinar" required="true" requiredMessage="Debe subir una imagen del auto" dragDropSupport="true" multiple="false" sizeLimit="16777216" invalidSizeMessage="Tamaño excedido" fileLimitMessage="Tamaño maximo por archivo excedido" />
+                            <h:panelGrid columns="3" cellspacing="15">
+                                <p:graphicImage id="imagen" name="#{controladorGestionAutos.imagenAuto}" alt="No hay imagen." cache="false" width="150px" stream="true"/>
+                                <p:graphicImage id="imagen2" name="#{controladorGestionAutos.imagenAuto2}" alt=" " cache="false" width="150px" stream="true"/>
+                                <p:graphicImage id="imagen3" name="#{controladorGestionAutos.imagenAuto3}" alt=" " cache="false" width="150px" stream="true"/>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                        <h:outputLabel value="Placa* "/>
+                        <p:inputText value="#{controladorGestionAutos.vehiculoSeleccionado.numeroPlaca}"/>
+                        <h:outputLabel value="Precio actual* "/>
+                        <p:inputNumber value="#{controladorGestionAutos.vehiculoSeleccionado.precioActual}"/>
+                        <h:outputLabel value="Marcas* "/>
+                        <p:selectOneMenu value="#{controladorGestionAutos.codigoMarca}" required="true" requiredMessage="Debe seleccionar una marca de vehiculo.">
+                            <f:selectItem noSelectionOption="true" itemLabel="-- Seleccione --" itemValue="#{null}"/>
+                            <f:selectItems value="#{controladorGestionAutos.listaMarcas}" var="marca" itemLabel="#{marca.descripcion}" itemValue="#{marca.idMarcas}"/>
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Combustible* "/>
+                        <p:selectOneMenu value="#{controladorGestionAutos.codigoCombustible}" required="true" requiredMessage="Debe seleccionar un tipo de combustible para vehiculo.">
+                            <f:selectItem noSelectionOption="true" itemLabel="-- Seleccione --" itemValue="#{null}"/>
+                            <f:selectItems value="#{controladorGestionAutos.listaCombustibles}" var="combustible" itemLabel="#{combustible.descripcion}" itemValue="#{combustible.idTipoCombustible}"/>
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Tipo de vehiculo* "/>
+                        <p:selectOneMenu value="#{controladorGestionAutos.codigoTipoVehiculo}" required="true" requiredMessage="Debe seleccionar un tipo de vehiculo.">
+                            <f:selectItem noSelectionOption="true" itemLabel="-- Seleccione --" itemValue="#{null}"/>
+                            <f:selectItems value="#{controladorGestionAutos.listaTiposVehiculos}" var="tipoVehiculo" itemLabel="#{tipoVehiculo.descripcion}" itemValue="#{tipoVehiculo.idTiposVehiculos}"/>
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Color* "/>
+                        <p:selectOneMenu value="#{controladorGestionAutos.codigoColor}" required="true" requiredMessage="Debe seleccionar un color de vehiculo.">
+                            <f:selectItem noSelectionOption="true" itemLabel="-- Seleccione --" itemValue="#{null}"/>
+                            <f:selectItems value="#{controladorGestionAutos.listaColores}" var="color" itemLabel="#{color.descripcion}" itemValue="#{color.idColor}"/>
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Estado del auto" />
+                        <p:selectOneMenu value="#{controladorGestionAutos.vehiculoSeleccionado.estadoVehiculo}" required="true" requiredMessage="Debe seleccionar un estado del auto">
+                            <f:selectItem noSelectionOption="true" itemLabel="-- Seleccione --" itemValue="#{null}"/>
+                            <f:selectItems value="#{controladorGestionAutos.listaEstados}" var="estado" itemLabel="#{controladorGestionAutos.traducirEstadoAuto(estado.charValue())}" itemValue="#{estado}"/>
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Año* "/>
+                        <p:calendar value="#{controladorGestionAutos.vehiculoSeleccionado.añoVehiculo}"/>
+                        <h:outputLabel value="Cantidad* "/>
+                        <p:spinner id="spnCantidad" value="#{controladorGestionAutos.vehiculoSeleccionado.cantidad}"/>
+                        <f:facet name="footer">
+                            <p:commandButton value="Guardar" actionListener="#{controladorGestionAutos.guardarAuto()}" update=":frmAutos:tblAutos grlAutos"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </h:form>
+            </p:dialog>
+        </h:body>
+        <script type="text/javascript">
+            function start() {
+                PF('statusDialog').show();
+            }
+
+            function stop() {
+                PF('statusDialog').hide();
+            }
+        </script>
+    </ui:define>
+</ui:composition>

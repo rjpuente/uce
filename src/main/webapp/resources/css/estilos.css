@@ -1,0 +1,314 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 13, 2016, 12:54:22 PM
+    Author     : fsuarez
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+body{
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-size: 14px;
+    background-color: #e9edf4;
+    color: #545454;
+}
+
+h1{
+    font-size: 36px;
+    font-weight: bold;
+}
+
+h2{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+h2.importante{
+    font-size: 24px;
+    font-weight: bolder;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:active{
+    color: #B7D730 !important;
+}
+
+a:hover{
+    color: #B7D730 !important;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+
+}
+
+.panelGridSinBorde.ui-panelgrid>*>tr,
+.panelGridSinBorde.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+}
+
+.estiloDia{
+    vertical-align: top;
+    width: 16.66%;
+}
+
+.ui-inputfield {
+    height: 22px;
+    border: #d5d5d5 thin solid;
+    font-size: 12px;
+}
+
+#principal_login_cliente{
+    background-color: #eeeeee;
+    margin-top: 0px;
+}
+
+#area_logo{
+    background-color: white;
+    margin-left: 5%;
+    margin-right: 6%;
+    height: 100px;
+}
+
+#img_logo{
+    width: 7%;
+    height: 81%;
+    margin-left: 6.5%;
+    margin-top: 1%;
+}
+
+.panelGris{
+    background-color: #e9edf4;
+    margin-left: 0%;
+    margin-right: 0%;
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
+}
+
+.panelNegro{
+    background-color: #343434;;
+    margin-left: 0%;
+    margin-right: 0%;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding: 10px 10px 10px 10px;
+    width: 100%;
+    color: #FFFFFF;
+    font-size: 13px;
+}
+
+#area_reestrablecer_contrasena{
+    background-color: rgba(64, 61, 61, 0.04);
+    margin-left: 5%;
+    margin-right: 6%;
+    height: 300px;
+    width: 89%;
+}
+
+#form_login{
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 21%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+#boton_login_cliente{
+    background-color: #B7D730;
+}
+
+#footer_area{
+    background-color: #343434;
+    height: 180px;
+    margin-left: 5%;
+    margin-right: 6%;
+}
+
+#titulo_contactanos{
+    color: #f0f0f0;
+    font-size: 36px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 39px;
+    padding-left: 47px;
+}
+
+#subtitulo_contactanos{
+    color: #f0f0f0;
+    font-size: 14px;
+    padding-left: 47px;
+    margin-top: 0;
+}
+
+#boton_contactanos{
+    width: 170px;
+    height: 45px;
+    margin-top: 61px;
+    margin-left: 35px;
+    background-color: #B7D730;
+    border: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+}
+
+.boton_general.ui-button,button.ui-state-default{
+    background-color: #B7D730 !important; 
+    color: #383838 !important; 
+    border: none !important; 
+    border-radius: initial;
+    font-family: 'Open Sans', sans-serif !important; 
+    font-size: 12px !important;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-transform: uppercase;
+}
+
+.boton_general.ui-button,button.ui-state-active{
+    background-color: #FFFFFF !important; 
+    color: #545454 !important;
+    border-width: thin !important;
+    border-color: #B7D730 !important;
+    border-style: solid !important;
+    font-family: 'Open Sans', sans-serif !important; 
+    font-size: 12px !important;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-transform: uppercase;
+}
+
+.citaConfirmada{
+    background-color: #BFD730;
+    color: #343434 !important;
+}
+
+.citaNoConfirmada{
+    background-color: #8A261D;
+}
+
+.evento{
+    background-color: gray;
+}
+
+.citaColor0{
+    background-color: #878A73;
+    color: white;
+}
+
+.citaColor1{
+    background-color: #68A3DE;
+    color: white;
+}
+
+.citaColor2{
+    background-color: #BFD730;
+    color: white;
+}
+
+.citaColor3{
+    background-color: #A45953;
+    color: white;
+}
+
+.citaColor4{
+    background-color: #8A261D;
+    color: white;
+}
+
+.citaColor5{
+    background-color: #595959;
+    color: white;
+}
+
+.citaColor6{
+    background-color: #656856;
+    color: white;
+}
+
+.citaColor7{
+    background-color: #4E7AA7;
+    color: white;
+}
+
+.citaColor8{
+    background-color: #8FA124;
+    color: white;
+}
+
+.citaColor9{
+    background-color: #7B433E;
+    color: white;
+}
+
+.citaColor10{
+    background-color: #681D16;
+    color: white;
+}
+
+.enfasis{
+    color: black;
+    font-weight: bold;
+}
+
+.sinFondo .ui-layout-unit-content{
+    background: #d5d5d5;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    border: none;
+}
+
+.fileupload-buttonbar {
+    background: transparent none;
+    border: none;
+}
+
+.fileupload-content {
+    display: none;
+}
+
+.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.ui-fileupload-choose {
+    background-color: #B7D730 !important; 
+    color: #545454 !important; 
+    border: none !important; 
+    border-radius: initial;
+    font-family: 'Open Sans', sans-serif !important; 
+    font-size: 12px !important;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-transform: uppercase;
+}
+
+.ui-layout-resizer, .ui-layout-resizer-north, ui-layout-resizer-open, .ui-layout-resizer-north-open, 
+.ui-layout-resizer-west, .ui-layout-resizer-west-open, 
+.ui-layout-resizer-east, .ui-layout-resizer-east-open 
+{
+    display: none;
+}
+
+.tablaResumen{
+    width: 100%;
+}
+.booleanCheckbox .ui-chkbox-box.ui-state-active {
+    background-color: red !important;
+    border-color: red !important;
+}
+
+.booleanCheckbox .ui-chkbox-box.ui-state-active .ui-icon {
+    background-image: none !important;
+}
+.llamada{
+    background-color: green;
+}
+.visita{
+    background-color: blue;
+}
+.ninguna{
+    background-color: red;
+}

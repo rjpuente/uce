@@ -1,0 +1,130 @@
+<ui:composition 
+    template="/WEB-INF/templates/layout_cliente.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="content">
+        <h:head>
+
+        </h:head>
+        <style type="text/css"> 
+
+            .ui-dataview-list .ui-dataview-row {
+                border-bottom: 1px solid #A8A8A8;
+                padding: 25px 10px;
+            }
+
+            .logo {
+                width: 5%;
+            }
+            .detail {
+                width: 85%;
+                padding-left: 25px;
+            }
+        </style>
+
+        <h1>#{controladorSessionCliente.clienteActual.nombreCliente}</h1>
+        <p:spacer width="100%" height="20"/>
+
+        <h:body>
+            <h:form id="frmAutosCliente">
+                <p:growl id="grlAutosCliente" sticky="false"/>
+                <h2>Autos disponibles</h2>
+                <p:spacer height="15" width="100%"/>
+                <p:fieldset id="fldFiltros" legend="Filtros" toggleable="true" toggleSpeed="500">
+                    <h:panelGrid columns="8" cellspacing="15">
+                        <h:outputLabel value="Marcas"/>
+                        <p:selectOneMenu value="#{controladorPantallaPrincipalCliente.codigoMarca}">
+                            <f:selectItem noSelectionOption="true" itemLabel="-- Seleccione --"/>
+                            <f:selectItems value="#{controladorPantallaPrincipalCliente.listaMarcas}" var="marca" itemLabel="#{marca.descripcion}" itemValue="#{marca.idMarcas}"/>
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Cantidad disponible"/>
+                        <p:spinner value="#{controladorPantallaPrincipalCliente.cantidad}"/>
+                        <h:outputLabel value="Precio desde"/>
+                        <p:inputNumber value="#{controladorPantallaPrincipalCliente.precioDesde}">
+                            <f:convertNumber maxFractionDigits="2"/>
+                        </p:inputNumber>
+                        <h:outputLabel value="Precio hasta"/>
+                        <p:inputNumber value="#{controladorPantallaPrincipalCliente.precioHasta}">
+                            <f:convertNumber maxFractionDigits="2"/>
+                        </p:inputNumber>
+                        <h:outputLabel value="Color"/>
+                        <p:selectOneMenu value="#{controladorPantallaPrincipalCliente.codigoColor}">
+                            <f:selectItem noSelectionOption="true" itemLabel="-- Seleccione --"/>
+                            <f:selectItems value="#{controladorPantallaPrincipalCliente.listaColores}" var="color" itemLabel="#{color.descripcion}" itemValue="#{color.idColor}"/>
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Combustible"/>
+                        <p:selectOneMenu value="#{controladorPantallaPrincipalCliente.codigoCmbustible}">
+                            <f:selectItem noSelectionOption="true" itemLabel="-- Seleccione --"/>
+                            <f:selectItems value="#{controladorPantallaPrincipalCliente.listaCombustibles}" var="combustible" itemLabel="#{combustible.descripcion}" itemValue="#{combustible.idTipoCombustible}"/>
+                        </p:selectOneMenu>
+                        <f:facet name="footer">
+                            <p:commandButton value="Aplicar" actionListener="#{controladorPantallaPrincipalCliente.aplicarFiltros()}" update=":frmAutosCliente:tblAutosDisponibles grlAutosCliente"/>
+                            <p:commandButton value="Limpiar" actionListener="#{controladorPantallaPrincipalCliente.limpiarFiltros()}" update="@form" style="float: right;"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </p:fieldset>
+                <p:spacer height="15" width="100%"/>
+                <p:dataView id="tblAutosDisponibles" value="#{controladorPantallaPrincipalCliente.listaVehiculosDisponible}" var="autoD">
+                    <p:dataViewGridItem>
+                        <p:panel header="#{autoD.numeroPlaca}" style="text-align: center;"> 
+                            <h:outputText value="#{autoD.numeroPlaca}"/>
+                        </p:panel>
+                    </p:dataViewGridItem>
+
+                    <p:dataViewListItem>
+                        <h:panelGrid columns="2" style="width: 100%" columnClasses="logo, detail">
+                            <h:panelGrid columns="4" >
+                                <p:outputPanel>
+                                    <h:panelGrid columns="4" cellspacing="15" cellpadding="10">
+                                        <h:outputLabel value="Placa: "/>
+                                        <h:outputText value="#{autoD.numeroPlaca}"/>
+                                        <h:outputLabel value="Precio: "/>
+                                        <h:outputText value="#{autoD.precioActual}"/>
+                                        <h:outputLabel value="Marca: "/>
+                                        <h:outputText value="#{autoD.marcas.descripcion}"/>
+                                        <h:outputLabel value="Color: "/>
+                                        <h:outputText value="#{autoD.color.descripcion}"/>
+                                        <h:outputLabel value="Tipo de vehiculo:"/>
+                                        <h:outputText value="#{autoD.tiposVehiculos.descripcion}"/>
+                                        <h:outputLabel value="Año:"/>
+                                        <h:outputText value="#{autoD.añoVehiculo}"/>
+                                        <h:outputLabel value="Tipo de combustible:"/>
+                                        <h:outputText value="#{autoD.tiposCombustible.descripcion}"/>
+                                        <h:outputLabel value="Cantidad disponible: "/>
+                                        <h:outputText value="#{autoD.cantidad}"/>
+                                    </h:panelGrid>
+                                </p:outputPanel>
+
+                                <p:commandButton icon="ui-icon ui-icon-suitcase" onclick="PF('dlgRentarAuto').show();" update=":frmRentarAuto" title="Rentar" actionListener="#{controladorPantallaPrincipalCliente.nueuvoTicket(autoD)}" style="margin: 0 auto"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:dataViewListItem>
+                </p:dataView>
+            </h:form>
+
+            <p:dialog id="dlgRentarAuto" widgetVar="dlgRentarAuto" header="Rentar el auto">
+                <h:form id="frmRentarAuto">
+                    <p:growl id="grlRentarAuto" sticky="false" showDetail="true"/>
+                    <h:panelGrid columns="4" cellspacing="15">
+                        <h:outputText value="Placa:"/>
+                        <h:outputText value="#{controladorPantallaPrincipalCliente.vehiculoSeleccionado.numeroPlaca}"/>
+                        <h:outputLabel value="Fecha de salida"/>
+                        <p:calendar value="#{controladorPantallaPrincipalCliente.fechaSalida}"/>
+                        <h:outputLabel value="Fecha de entrega" />
+                        <p:calendar value="#{controladorPantallaPrincipalCliente.fechaEntrega}"/>
+                        <h:outputLabel value="Tipo de pago: "/>
+                        <p:selectOneMenu value="#{controladorPantallaPrincipalCliente.tipoDePago}" required="true" requiredMessage="Debe ingresar un tipo de pago">
+                            <f:selectItem noSelectionOption="true" itemLabel="-- Seleccione --" />
+                            <f:selectItems value="#{controladorPantallaPrincipalCliente.listaTiposPagos}" var="tipoPago" itemLabel="#{tipoPago.descripcion}" itemValue="#{tipoPago.idTipoPago}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <p:commandButton value="Guardar" style="float: right;" actionListener="#{controladorPantallaPrincipalCliente.guardarTicket()}" update=":frmAutosCliente"/>
+                </h:form>
+            </p:dialog>
+        </h:body>
+    </ui:define>
+</ui:composition>

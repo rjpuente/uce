@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Rent a Car</title>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/estilos.css"/>
+        <style>
+            #panelSuperior {z-index:2 !important; }
+            #panelSuperior div{overflow:visible;}
+        </style>
+    </h:head>
+    <h:body>
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans" />
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" id="panelSuperior" size="150" style="border: none;">
+                <h:form>
+                    <p:graphicImage value="/resources/imagenes/logo1.png" id="img_logo" width="175px" style="padding-left: 50px; padding-top: 20px;" />
+                    <div style="position: absolute; left: 180px; top: 50px; width: 85%">
+                        <ui:include src="../templates/menu.xhtml" />
+                    </div>
+                </h:form>
+            </p:layoutUnit>
+            <p:layoutUnit position="center" style="border: none;">
+                <div style="padding-left: 50px; padding-right: 50px;">
+                    <ui:insert name="content"></ui:insert>
+                </div>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>

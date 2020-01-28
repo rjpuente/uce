@@ -1,0 +1,46 @@
+<ui:composition 
+    template="/WEB-INF/templates/layout_externo.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    <ui:define name="contentExterno">
+        <h:head>
+            <title>RENT A CAR</title>
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/estilos.css"/>
+        </h:head>
+        <h:body id="principal_login">
+            <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage name="imagenes/cargando.gif" height="70"/>
+            </p:dialog>
+            <div class="panelGris">
+                <div id="form_login">
+                    <h:form id="frmLogin">
+                        <p:growl id="grlLogin" showDetail="true" sticky="true"/>
+                        <h2>Inicio de sesión</h2>
+                        
+                        <p:inputText id="nombreUsuario" value="#{controladorSesion.nombreUsuario}" required="true" requiredMessage="Debe ingresar el nombre de usuario." placeholder="Funcionario"/>
+                        <p:password id="contraseña" value="#{controladorSesion.contrasena}" required="true" requiredMessage="Debe ingresar la contraseña" placeholder="Contraseña"/>
+                        <div>
+                            <p:commandButton value="Iniciar sesión" action="#{controladorSesion.validarCredenciales()}" update="grlLogin" style="margin-top: 10px"/>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+            <script type="text/javascript">
+                function start() {
+                    PF('statusDialog').show();
+                }
+
+                function stop() {
+                    PF('statusDialog').hide();
+                }
+            </script>
+            <div class="panelNegro">
+                <p>Utilice sus credenciales de la empresa para poder acceder a nuestros sistemas.</p>
+            </div>
+        </h:body>
+    </ui:define>
+</ui:composition>

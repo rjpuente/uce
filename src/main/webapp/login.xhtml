@@ -1,0 +1,53 @@
+<ui:composition 
+    template="/WEB-INF/templates/layout_externo.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    <ui:define name="contentExterno">
+        <h:head>
+            <title>Rent A Car</title>
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/estilos.css"/>
+        </h:head>
+        <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <p:graphicImage name="imagenes/cargando.gif" height="70" />
+        </p:dialog>
+        <h:body id="principal_login_cliente">
+            <div class="panelGris">
+                <div id="form_login">
+                    <h:form id="frmLogin" >
+                        <p:growl id="growl" showDetail="true" sticky="true"/>
+                        <h2>Inicio de Sessión</h2>
+                        <p:inputText id="nombreUsuario" value="#{controladorSessionCliente.ruc}"
+                                     required="true" requiredMessage="Nombre de usuario requerido" placeholder="RUC"
+                                     styleClass="inputText">
+                        </p:inputText>
+                        <p:password id="contraseña" value="#{controladorSessionCliente.contraseña}" required="true"
+                                    requiredMessage="Contraseña requerida" placeholder="Contraseña" styleClass="inputText">
+                        </p:password>
+                        <div>
+                            <p:commandButton value="Iniciar sesión" action="#{controladorSessionCliente.validarRucPassword()}" update="growl" style="margin-top: 10px;"/>
+                            <h:link value="Registro" outcome="registro"/>
+                        </div>                    
+                    </h:form>
+                </div>
+            </div>
+            <script type="text/javascript">
+                function start() {
+                    PF('statusDialog').show();
+                }
+
+                function stop() {
+                    PF('statusDialog').hide();
+                }
+            </script>
+            <div class="panelNegro">
+                <p>Estimado cliente / proveedor:</p>
+                <p>Ingrese su RUC y contraseña para iniciar una sesión, si aún no tiene una cuenta, haga click en Registro para activar sus credenciales.</p>
+                <p:link outcome="loginFuncionario" value="Login funcionarios" style="color: #ffffff;"/>
+            </div>
+        </h:body>
+    </ui:define>
+</ui:composition>

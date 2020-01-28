@@ -1,0 +1,69 @@
+<ui:composition 
+    template="/WEB-INF/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="content">
+        <h:head>
+            <title>Aprobacion de tickets</title>
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/estilos.css"/>   
+        </h:head>
+        <h:body>
+            <h1>Aprobación de tickets</h1>
+            <h:form id="frmAprobacionTickets">
+                <p:growl id="grlAprobacionTickets" sticky="false" showDetail="false"/>
+                <p:dataTable id="tblTicketsPorAprobar" value="#{controladorAprobacionTickets.listaTicketsPorAprobar}" var="ticket" emptyMessage="No hay tickets por aprobar.">
+                    <p:column headerText="Placa" style="text-align: center">
+                        <h:outputText value="#{ticket.vehiculoPlaca.numeroPlaca}"/>
+                    </p:column>
+                    <p:column headerText="Tipo de pago" style="text-align: center">
+                        <h:outputText value="#{ticket.tipoPago.descripcion}"/>
+                    </p:column>
+                    <p:column headerText="Cliente" style="text-align: center;">
+                        <h:outputText value="#{ticket.cliente.nombreCliente}"/>
+                    </p:column>
+                    <p:column headerText="Fecha de Salida" style="text-align: center">
+                        <h:outputText value="#{ticket.fechaSalida}" >
+                            <f:convertDateTime pattern="dd/MM/yyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Fecha de entrega" style="text-align: center">
+                        <h:outputText value="#{ticket.fechaEntrega}" >
+                            <f:convertDateTime pattern="dd/MM/yyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column style="text-align: center;">
+                        <h:panelGrid columns="2" cellpadding="15" cellspacing="15">
+                            <p:commandButton value="Aprobar" onclick="PF('dlgAprobarTicket').show();" update=":frmAprobacion" actionListener="#{controladorAprobacionTickets.iniciarAprobacion(ticket)}"/>
+                            <p:commandButton value="Rechazar" actionListener="#{controladorAprobacionTickets.rechazarTicket()}">
+                                <p:confirm header="Confirmación" message="Esto rechazara la solicitud de renta. ¿Está seguro?" icon="ui-icon-alert" />
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                        </h:panelGrid>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            
+            <p:dialog id="dlgAprobarTicket" header="Aprobar ticket" widgetVar="dlgAprobarTicket">
+                <h:form id="frmAprobacion">
+                    <p:growl id="grlAprobacionTickets" sticky="false" showDetail="false"/>
+                    <h:panelGrid columns="2" cellspacing="20">
+                        <h:outputLabel value="Tipo de pago"/>
+                        <h:outputText value="#{controladorAprobacionTickets.ticketSelecionado.tipoPago.descripcion}"/>
+                        <h:outputLabel value="Cantidad cancelada"/>
+                        <p:inputText value="#{controladorAprobacionTickets.ticketSelecionado.pagoAlquiler}" required="true" requiredMessage="Debe ingresar el monto cancelado"/>
+                        <f:facet name="footer">
+                            <p:commandButton value="Confirmar" style="float: right;" actionListener="#{controladorAprobacionTickets.aprobarTicket()}" update=":frmAprobacionTickets"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </h:form>
+            </p:dialog>
+        </h:body>
+    </ui:define>
+</ui:composition>

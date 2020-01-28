@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>#{controladorPantallaCliente.cliente.nombreCliente}</title>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/estilos.css"/>
+        <style>
+            .alineadoArriba{
+                vertical-align: top;
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <p:dialog modal="true" widgetVar="statusDialog" header="Descarga" draggable="false" closable="false" resizable="false">
+            <h:outputText value="Descargando..."/>
+        </p:dialog>
+
+        <h:form id="frmCliente">
+            <p:growl id="mensajes" sticky="false" showDetail="false"/>
+            <p:panelGrid columns="4">
+                <p:outputLabel value="Cédula" for="cedula"/>
+                <h:outputText value="#{controladorPantallaCliente.cliente.cedula}" id="cedula"/>
+                <p:outputLabel value="Correo electronico" for="mail"/>
+                <h:outputText value="#{controladorPantallaCliente.cliente.correoElectronicoCliente}" id="mail"/>
+                <h:outputLabel value="Dirección" for="direccion"/>
+                <h:outputText value="#{controladorPantallaCliente.cliente.direccionCliente}"/>
+            </p:panelGrid>
+        </h:form>
+        <p:spacer width="100%" height="5"/>
+        <p:tabView style="padding-top: 10px" id="tabViewCliente" dynamic="true" cache="true">
+            <p:tab title="Autos rentados">
+                <h:form id="frmAutosRentados">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <p:outputLabel value="Desde"/>
+                        <p:calendar value="#{controladorPantallaCliente.rentasDesde}" pattern="yyyy-MM-dd"/>
+                        <p:outputLabel value="Hasta"/>
+                        <p:calendar value="#{controladorPantallaCliente.rentasHasta}" pattern="yyyy-MM-dd"/>
+                    </h:panelGrid>
+                    <p:spacer width="100%" height="20"/>
+                    <p:commandButton value="Obtener rentas del cliente" actionListener="" update="@form"/>
+                    <p:spacer width="100%" height="20"/>
+                    <p:dataTable value="#{controladorPantallaCliente.listaAutosRentadosRecientemente}" var="renta" emptyMessage="No existen rentas para las fechas indicadas" scrollable="true">
+                        <p:column headerText="" style="width:32px; text-align: center;">
+                           
+                        </p:column>
+                        <p:column headerText="Empleado" style="text-align: center">
+                            <h:outputText value="#{renta.empleado.nombreEmpleado}"/>
+                        </p:column>
+                        <p:column headerText="Placa del vehiculo" style="text-align: center">
+                            <h:outputText value="#{renta.vehiculoPlaca.numeroPlaca}"/>
+                        </p:column>
+                        <p:column headerText="Fecha de salida" style="text-align: center">
+                            <h:outputText value="#{renta.fechaSalida}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Fecha de entrega" style="text-align: center">
+                            <h:outputText value="#{renta.fechaEntrega}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Cantidad cancelada" style="text-align: center">
+                            <h:outputText value="#{renta.pagoAlquiler}">
+                                <f:convertNumber maxFractionDigits="2"/>
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:tab>
+        </p:tabView>
+    </h:body>
+</html>

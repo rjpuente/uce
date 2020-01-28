@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN" "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+<resources>
+    <jdbc-connection-pool allow-non-component-callers="false" associate-with-thread="false" connection-creation-retry-attempts="0" connection-creation-retry-interval-in-seconds="10" connection-leak-reclaim="false" connection-leak-timeout-in-seconds="0" connection-validation-method="auto-commit" datasource-classname="org.postgresql.ds.PGSimpleDataSource" fail-all-connections="false" idle-timeout-in-seconds="300" is-connection-validation-required="false" is-isolation-level-guaranteed="true" lazy-connection-association="false" lazy-connection-enlistment="false" match-connections="false" max-connection-usage-count="0" max-pool-size="32" max-wait-time-in-millis="60000" name="post-gre-sql_rentacarpruebas_postgresPool" non-transactional-connections="false" pool-resize-quantity="2" res-type="javax.sql.DataSource" statement-timeout-in-seconds="-1" steady-pool-size="8" validate-atmost-once-period-in-seconds="0" wrap-jdbc-objects="false">
+        <property name="serverName" value="localhost"/>
+        <property name="portNumber" value="5432"/>
+        <property name="databaseName" value="rentacar"/>
+        <property name="User" value="uce"/>
+        <property name="Password" value="chocolatesan18"/>
+        <property name="URL" value="jdbc:postgresql://localhost:5432/rentacar"/>
+        <property name="driverClass" value="org.postgresql.Driver"/>
+    </jdbc-connection-pool>
+    <jdbc-resource enabled="true" jndi-name="java:app/rentacar" object-type="user" pool-name="post-gre-sql_rentacarpruebas_postgresPool"/>
+    <jdbc-connection-pool allow-non-component-callers="false" associate-with-thread="false" connection-creation-retry-attempts="0" connection-creation-retry-interval-in-seconds="10" connection-leak-reclaim="false" connection-leak-timeout-in-seconds="0" connection-validation-method="auto-commit" datasource-classname="org.postgresql.ds.PGSimpleDataSource" fail-all-connections="false" idle-timeout-in-seconds="300" is-connection-validation-required="false" is-isolation-level-guaranteed="true" lazy-connection-association="false" lazy-connection-enlistment="false" match-connections="false" max-connection-usage-count="0" max-pool-size="32" max-wait-time-in-millis="60000" name="post-gre-sql_RentACar_postgresPool" non-transactional-connections="false" pool-resize-quantity="2" res-type="javax.sql.DataSource" statement-timeout-in-seconds="-1" steady-pool-size="8" validate-atmost-once-period-in-seconds="0" wrap-jdbc-objects="false">
+        <property name="serverName" value="localhost"/>
+        <property name="portNumber" value="5432"/>
+        <property name="databaseName" value="RentACar"/>
+        <property name="User" value="postgres"/>
+        <property name="Password" value="chocolatesan18"/>
+        <property name="URL" value="jdbc:postgresql://localhost:5432/RentACar"/>
+        <property name="driverClass" value="org.postgresql.Driver"/>
+    </jdbc-connection-pool>
+    <jdbc-resource enabled="true" jndi-name="java:app/rent_a_car" object-type="user" pool-name="post-gre-sql_RentACar_postgresPool"/>
+    <jdbc-resource enabled="true" jndi-name="java:app/rent_a_car" object-type="user" pool-name="post-gre-sql_RentACar_postgresPool"/>
+    <jdbc-connection-pool allow-non-component-callers="false" associate-with-thread="false" connection-creation-retry-attempts="0" connection-creation-retry-interval-in-seconds="10" connection-leak-reclaim="false" connection-leak-timeout-in-seconds="0" connection-validation-method="auto-commit" datasource-classname="org.postgresql.ds.PGSimpleDataSource" fail-all-connections="false" idle-timeout-in-seconds="300" is-connection-validation-required="false" is-isolation-level-guaranteed="true" lazy-connection-association="false" lazy-connection-enlistment="false" match-connections="false" max-connection-usage-count="0" max-pool-size="32" max-wait-time-in-millis="60000" name="post-gre-sql_postgres_postgresPool" non-transactional-connections="false" pool-resize-quantity="2" res-type="javax.sql.DataSource" statement-timeout-in-seconds="-1" steady-pool-size="8" validate-atmost-once-period-in-seconds="0" wrap-jdbc-objects="false">
+        <property name="serverName" value="localhost"/>
+        <property name="portNumber" value="5432"/>
+        <property name="databaseName" value="postgres"/>
+        <property name="User" value="postgres"/>
+        <property name="Password" value="Chocolatesan18"/>
+        <property name="URL" value="jdbc:postgresql://localhost:5432/postgres"/>
+        <property name="driverClass" value="org.postgresql.Driver"/>
+    </jdbc-connection-pool>
+    <jdbc-resource enabled="true" jndi-name="java:app/rentACar" object-type="user" pool-name="post-gre-sql_postgres_postgresPool"/>
+    <jdbc-connection-pool allow-non-component-callers="false" associate-with-thread="false" connection-creation-retry-attempts="0" connection-creation-retry-interval-in-seconds="10" connection-leak-reclaim="false" connection-leak-timeout-in-seconds="0" connection-validation-method="auto-commit" datasource-classname="org.postgresql.ds.PGSimpleDataSource" fail-all-connections="false" idle-timeout-in-seconds="300" is-connection-validation-required="false" is-isolation-level-guaranteed="true" lazy-connection-association="false" lazy-connection-enlistment="false" match-connections="false" max-connection-usage-count="0" max-pool-size="32" max-wait-time-in-millis="60000" name="post-gre-sql_RentACar_postgresPool_1" non-transactional-connections="false" pool-resize-quantity="2" res-type="javax.sql.DataSource" statement-timeout-in-seconds="-1" steady-pool-size="8" validate-atmost-once-period-in-seconds="0" wrap-jdbc-objects="false">
+        <property name="serverName" value="localhost"/>
+        <property name="portNumber" value="5432"/>
+        <property name="databaseName" value="RentACar"/>
+        <property name="User" value="postgres"/>
+        <property name="Password" value="Chocolatesan18"/>
+        <property name="URL" value="jdbc:postgresql://localhost:5432/RentACar"/>
+        <property name="driverClass" value="org.postgresql.Driver"/>
+    </jdbc-connection-pool>
+    <jdbc-resource enabled="true" jndi-name="java:app/rent_A_Car" object-type="user" pool-name="post-gre-sql_RentACar_postgresPool_1"/>
+    <jdbc-resource enabled="true" jndi-name="java:app/RentACarPc" object-type="user" pool-name="post-gre-sql_RentACar_postgresPool"/>
+    <jdbc-resource enabled="true" jndi-name="java:app/rentACarpc" object-type="user" pool-name="post-gre-sql_RentACar_postgresPool_1"/>
+    <jdbc-connection-pool allow-non-component-callers="false" associate-with-thread="false" connection-creation-retry-attempts="0" connection-creation-retry-interval-in-seconds="10" connection-leak-reclaim="false" connection-leak-timeout-in-seconds="0" connection-validation-method="auto-commit" datasource-classname="org.postgresql.ds.PGSimpleDataSource" fail-all-connections="false" idle-timeout-in-seconds="300" is-connection-validation-required="false" is-isolation-level-guaranteed="true" lazy-connection-association="false" lazy-connection-enlistment="false" match-connections="false" max-connection-usage-count="0" max-pool-size="32" max-wait-time-in-millis="60000" name="post-gre-sql_df33o9uugi35tj_yurtcvddzjrqauPool" non-transactional-connections="false" pool-resize-quantity="2" res-type="javax.sql.DataSource" statement-timeout-in-seconds="-1" steady-pool-size="8" validate-atmost-once-period-in-seconds="0" wrap-jdbc-objects="false">
+        <property name="serverName" value="ec2-100-26-88-55.compute-1.amazonaws.com"/>
+        <property name="portNumber" value="5432"/>
+        <property name="databaseName" value="df33o9uugi35tj"/>
+        <property name="User" value="yurtcvddzjrqau"/>
+        <property name="Password" value="45bb1afa6230401368eb0ad155f90e7d3c6c3bc0274cbbd53ddb5daef4cd6506"/>
+        <property name="URL" value="jdbc:postgresql://ec2-100-26-88-55.compute-1.amazonaws.com:5432/df33o9uugi35tj"/>
+        <property name="driverClass" value="org.postgresql.Driver"/>
+    </jdbc-connection-pool>
+    <jdbc-resource enabled="true" jndi-name="java:app/Heroku" object-type="user" pool-name="post-gre-sql_df33o9uugi35tj_yurtcvddzjrqauPool"/>
+</resources>
